@@ -1,6 +1,6 @@
 <template>
   <main>
-    <QuestList title="Learning by Questing – Quests" />
+    <QuestList title="Learning by Questing - Quests" />
   </main>
 </template>
 
