@@ -26,20 +26,31 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
 import type { Ref } from 'vue'
+import axios from 'axios'
 import type { Quest } from '@/types'
 
 defineProps<{
   title: string
 }>()
 
-const quests: Ref<Quest[]> = ref([
-  { id: 1, title: 'Thema 1: Web-Basics wiederholen', module: 'Webtechnologien', status: 'DONE', xp: 50, createdBy: 'Ediz' },
-  { id: 2, title: 'Thema 4: Vue-Grundlagen lernen', module: 'Webtechnologien', status: 'IN_PROGRESS', xp: 100, createdBy: 'Malik' },
-  { id: 3, title: 'Thema 7: Datenbankanbindung verstehen', module: 'Webtechnologien', status: 'TODO', xp: 80, createdBy: 'Ediz' },
-  { id: 4, title: 'Thema 9: Betriebskosten Abrechnung', module: 'Controlling', status: 'IN_PROGRESS', xp: 35, createdBy: 'Malik' },
-])
+const quests: Ref<Quest[]> = ref([])
+
+async function loadQuests() {
+  const baseUrl = import.meta.env.VITE_BACKEND_BASE_URL
+  try {
+    const response = await axios.get<Quest[]>(baseUrl + '/quests')
+    quests.value = response.data
+  } catch (error) {
+    console.error('Quests konnten nicht geladen werden:', error)
+  }
+}
+
+onMounted(() => {
+  loadQuests()
+})
 </script>
 
 <style scoped>
