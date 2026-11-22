@@ -14,7 +14,7 @@
       <tr v-if="quests.length === 0">
         <td colspan="5">Noch keine Quests vorhanden</td>
       </tr>
-      <tr v-for="quest in quests" :key="quest.id">
+      <tr v-for="quest in quests" :key="quest.title">
         <td>{{ quest.title }}</td>
         <td>{{ quest.module }}</td>
         <td>{{ quest.status }}</td>
@@ -25,7 +25,6 @@
   </table>
 </template>
 
-<script setup lang="ts">
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import type { Ref } from 'vue'
@@ -61,7 +60,8 @@ table {
   margin-left: auto;
   margin-right: auto;
 }
-th, td {
+th,
+td {
   padding: 0.3rem 0.8rem;
 }
 </style>
